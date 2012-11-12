@@ -7,7 +7,7 @@ import os.path
 # Configuration
 chords = ["E", "A", "D", "Emin", "Amin", "Dmin"] # The chords from which combinations may be formed
 scorePath = "score.dat" # Where to store the scores
-variance = 1.0 # Play around with this value. The lower the value, the higher the probablity for lower-ranked chord combinations to be chosen
+variance = 0.05 # Play around with this value. The lower the value, the higher the probablity for lower-ranked chord combinations to be chosen
 
 numberOfChords = len(chords)
 
