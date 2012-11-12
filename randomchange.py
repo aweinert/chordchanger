@@ -32,5 +32,12 @@ newScore = int(raw_input("What is your current score for that chord change? "))
 
 score[first, second] = (score[first, second] + newScore) / 2
 
+print ""
+print "-----------------------------"
+print "Your current average scores:"
+for i in range(0, numberOfChords - 1):
+	for j in range(i + 1, numberOfChords):
+		print "\t"  + chords[i] + " <-> " + chords[j] + ": " + str(score[i,j])
+
 with open(scorePath, 'w') as f:
 	pickle.dump(score, f)
