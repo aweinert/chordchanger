@@ -4,29 +4,30 @@ import random
 import cPickle as pickle
 import os.path
 
-numberOfChords = 6
+chords = ["E", "A", "D", "Emin", "Amin", "Dmin"]
+numberOfChords = len(chords)
 freqPath = "frequency.dat"
 
 try:
 	with open(freqPath) as f: frequency = pickle.load(f)
 except IOError as e:
 	frequency = dict()
-	for i in range(1, numberOfChords):
-		for j in range(i + 1, numberOfChords + 1):
+	for i in range(0, numberOfChords - 1):
+		for j in range(i + 1, numberOfChords):
 			frequency[i, j] = 0
 
-chords = {1: "E", 2: "A", 3: "D", 4: "Emin", 5: "Amin", 6: "Dmin"}
-
-first = random.randint(1, numberOfChords)
-second = random.randint(1, numberOfChords - 1)
+first = random.randint(0, numberOfChords - 2)
+second = random.randint(0, numberOfChords - 1)
 
 # Make sure that first < second
-if first < second:
-	second = second + 1
-elif first >= second:
-	temp = first
+if first >= second:
+	temp = second
+	second = first
 	first = second
-	second = temp
+
+# Make sure that first != second
+if first == second:
+	second = second + 1
 
 print "Change: " + chords[first] + " <-> " + chords[second]
 
