@@ -6,15 +6,15 @@ import os.path
 
 chords = ["E", "A", "D", "Emin", "Amin", "Dmin"]
 numberOfChords = len(chords)
-freqPath = "frequency.dat"
+scorePath = "score.dat"
 
 try:
-	with open(freqPath) as f: frequency = pickle.load(f)
+	with open(scorePath) as f: score = pickle.load(f)
 except IOError as e:
-	frequency = dict()
+	score = dict()
 	for i in range(0, numberOfChords - 1):
 		for j in range(i + 1, numberOfChords):
-			frequency[i, j] = 0
+			score[i, j] = 1
 
 first = random.randint(0, numberOfChords - 2)
 second = random.randint(0, numberOfChords - 1)
@@ -31,7 +31,9 @@ if first == second:
 
 print "Change: " + chords[first] + " <-> " + chords[second]
 
-frequency[first, second] = frequency[first, second] + 1
+newScore = int(raw_input("What is your current score for that chord change? "))
 
-with open(freqPath, 'w') as f:
-	pickle.dump(frequency, f)
+score[first, second] = (score[first, second] + newScore) / 2
+
+with open(scorePath, 'w') as f:
+	pickle.dump(score, f)
