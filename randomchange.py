@@ -16,9 +16,10 @@ try:
 	with open(scorePath) as f: score = pickle.load(f)
 except IOError as e:
 	score = dict()
-	for i in range(0, numberOfChords - 1):
-		for j in range(i + 1, numberOfChords):
-			score[i, j] = 1 # Use 1 as standard value, since otherwise 1 / score would lead to division by zero
+
+for i in range(0, numberOfChords - 1):
+	for j in range(i + 1, numberOfChords):
+		if (i, j) not in score: score[i, j] = 1 # Use 1 as standard value, since otherwise 1 / score would lead to division by zero
 
 # Get one random number for each chord change, use the change with the highest random number
 # Since the expected value of the random number is 1/score, this gives us a higher probability for chords with lower scores
