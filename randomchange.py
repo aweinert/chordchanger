@@ -3,11 +3,16 @@
 import random
 import cPickle as pickle
 import os.path
+import time
 
 # Configuration
 chords = ["E", "A", "D", "Emin", "Amin", "Dmin"] # The chords from which combinations may be formed
 scorePath = "score.dat" # Where to store the scores
 variance = 0.05 # Play around with this value. The lower the value, the higher the probablity for lower-ranked chord combinations to be chosen
+warmup = 5 # Time between pressing a button and the start of the timer in seconds
+warmupSteps = 1 # Steps in which the counter will update in seconds. Must be a divisor of warmup
+playtime = 60 # Time for playing the chords in seconds
+playtimeSteps = 10 # Steps in which the playtime counter gets updated. Must be a divisor of playtime
 
 numberOfChords = len(chords)
 
@@ -34,7 +39,22 @@ for i in range(0, numberOfChords - 1):
 
 # Display the chord and update the score for it
 print "Change: " + chords[first] + " <-> " + chords[second]
-newScore = int(raw_input("What is your current score for that chord change? "))
+
+raw_input("Press a key to start the timer")
+
+for i in range(warmup, 0, -warmupSteps):
+	print 'Starting in', i, 'seconds...'
+	time.sleep(warmupSteps)
+
+print "-----------------GO-----------------"
+
+for i in range(playtime, 0, -playtimeSteps):
+	print i, "seconds to go"
+	time.sleep(playtimeSteps)
+
+print "----------------STOP----------------"
+
+newScore = int(raw_input("What is your current score for this chord change? "))
 # Weigh the new score and the previous average the same. This way older scores become "forgotten"
 score[first, second] = (score[first, second] + newScore) / 2
 
