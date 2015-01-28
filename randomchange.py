@@ -4,6 +4,7 @@ import random
 import cPickle as pickle
 import os.path
 import time
+import datetime
 
 # Configuration
 chords = ["E", "A", "D", "Emin", "Amin", "Dmin"] # The chords from which combinations may be formed
@@ -65,6 +66,23 @@ print "Your current average scores:"
 for i in range(0, numberOfChords - 1):
 	for j in range(i + 1, numberOfChords):
 		print "\t"  + chords[i] + " <-> " + chords[j] + ": " + str(score[i,j])
+
+now = datetime.datetime.now()
+with open("record.csv", 'a') as f:
+	f.write(chords[i])
+	f.write(",")
+	f.write(chords[j])
+	f.write(",")
+	f.write(str(newScore))
+	f.write(",")
+	f.write(str(now.date()))
+	f.write(",")
+	f.write(str(now.time().hour))
+	f.write(":")
+	f.write(str(now.time().minute))
+	f.write(":")
+	f.write(str(now.time().second))
+	f.write("\n")
 
 # Save the new scores
 with open(scorePath, 'w') as f:
